@@ -22,6 +22,6 @@ def index():
         message = Message(body=body, name=name)
         db.session.add(message)
         db.session.commit()
-        flash('Your message have been sent to the world!')
+        flash('你的消息已经发给全世界了！')
         return redirect(url_for('index'))
     return render_template('index.html', form=form, messages=messages)
