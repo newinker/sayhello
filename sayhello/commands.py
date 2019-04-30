@@ -28,18 +28,19 @@ def initdb(drop):
 def forge(count):
     """Generate fake messages."""
     from faker import Faker
+    from faker.providers.date_time import datetime_to_timestamp
 
     db.drop_all()
     db.create_all()
 
-    fake = Faker()
+    fake = Faker('zh_CN')
     click.echo('Working...')
 
     for i in range(count):
         message = Message(
             name=fake.name(),
             body=fake.sentence(),
-            timestamp=fake.date_time_this_year()
+            timestamp=fake.date_time_this_month()
         )
         db.session.add(message)
 
