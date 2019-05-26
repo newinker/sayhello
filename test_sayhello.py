@@ -5,6 +5,26 @@
     :copyright: © 2018 Grey Li <withlihui@gmail.com>
     :license: MIT, see LICENSE for more details.
 """
+#  Copyright (c) 2019 Nan Sun <newinker@isunnan.com>.
+#
+#  Permission is hereby granted, free of charge, to any person obtaining a copy
+#  of this software and associated documentation files (the "Software"), to deal
+#  in the Software without restriction, including without limitation the rights
+#  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#  copies of the Software, and to permit persons to whom the Software is
+#  furnished to do so, subject to the following conditions:
+#
+#  The above copyright notice and this permission notice shall be included in all
+#  copies or substantial portions of the Software.
+#
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+#  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+#  SOFTWARE.
+
 import unittest
 
 from flask import abort
@@ -40,7 +60,7 @@ class SayHelloTestCase(unittest.TestCase):
         response = self.client.get('/nothing')
         data = response.get_data(as_text=True)
         self.assertIn('404 Error', data)
-        self.assertIn('Go Back', data)
+        self.assertIn('返回', data)
         self.assertEqual(response.status_code, 404)
 
     def test_500_page(self):
@@ -53,12 +73,12 @@ class SayHelloTestCase(unittest.TestCase):
         data = response.get_data(as_text=True)
         self.assertEqual(response.status_code, 500)
         self.assertIn('500 Error', data)
-        self.assertIn('Go Back', data)
+        self.assertIn('返回', data)
 
     def test_index_page(self):
         response = self.client.get('/')
         data = response.get_data(as_text=True)
-        self.assertIn('Say Hello', data)
+        self.assertIn('说你好', data)
 
     def test_create_message(self):
         response = self.client.post('/', data=dict(
@@ -66,7 +86,7 @@ class SayHelloTestCase(unittest.TestCase):
             body='Hello, world.'
         ), follow_redirects=True)
         data = response.get_data(as_text=True)
-        self.assertIn('Your message have been sent to the world!', data)
+        self.assertIn('你的消息已经发给全世界了！', data)
         self.assertIn('Hello, world.', data)
 
     def test_form_validation(self):
